@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { readFileSync } from "fs";
+import * as http from "http";
 import * as ws from "ws";
 import { ID, receive, send, wait } from "./utils";
 import { MousePressPacket, MouseReleasePacket, MouseMovePacket, MovementPressPacket, MovementReleasePacket, GamePacket, ParticlesPacket, MapPacket, AckPacket, SwitchWeaponPacket, SoundPacket, UseHealingPacket, ResponsePacket, MobileMovementPacket, AnnouncePacket, PlayerRotationDelta } from "./types/packet";
@@ -14,8 +15,20 @@ import { MapData } from "./types/data";
 
 export var ticksElapsed = 0;
 
-const server = new ws.Server({ port: Number(process.env.PORT) || 8080 });
-server.once("listening", () => console.log(`WebSocket Server listening at port ${server.options.port}`));
+const port = Number(process.env.PORT) || 8080;
+// Lightweight HTTP server sharing the same port as the WebSocket server, so the
+// menu can poll the live player count (and Railway gets a health route at /).
+const httpServer = http.createServer((req, res) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	if (req.url === "/count" || req.url === "/status") {
+		res.setHeader("Content-Type", "application/json");
+		res.end(JSON.stringify({ online: sockets.size }));
+		return;
+	}
+	res.end("Islandr game server");
+});
+const server = new ws.Server({ server: httpServer });
+httpServer.listen(port, () => console.log(`Game server (HTTP + WebSocket) listening at port ${port}`));
 
 export const sockets = new Map<string, ws.WebSocket>();
 

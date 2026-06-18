@@ -209,6 +209,22 @@ console.log(getMode())
 		checkLoggedIn();
 	}
 
+	// Live player count on the menu — polls the game server's /count endpoint.
+	function refreshOnlineCount() {
+		const el = document.getElementById("online-count");
+		const addr = (<HTMLInputElement>document.getElementById("address"))?.value;
+		if (!el || !addr) return;
+		const proto = location.protocol === "https:" ? "https" : "http";
+		fetch(`${proto}://${addr}/count`)
+			.then(res => res.json())
+			.then(data => { el.textContent = `${data.online} player${data.online === 1 ? "" : "s"} online`; })
+			.catch(() => { el.textContent = "Server offline"; });
+	}
+	if (!window.location.href!.includes("/loadout")) {
+		refreshOnlineCount();
+		setInterval(refreshOnlineCount, 5000);
+	}
+
 	export function checkLoggedIn() {
 		if (cookieExists("username")) {
 			const username = getCookieValue("username")!;
