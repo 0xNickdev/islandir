@@ -30,6 +30,13 @@ if (token != undefined) {
 }
 if (window.location.href!.includes("/loadout")) {
     let container2Visible = false;
+    // The loadout markup uses inline onclick="showTab(...)" / closeLoadout() / changeCursor() / resetCursor().
+    // Those handlers resolve against the global scope, but these functions live inside this bundled module,
+    // so they must be exposed on window or the tab/close/cursor buttons do nothing.
+    (window as any).showTab = showTab;
+    (window as any).closeLoadout = closeLoadout;
+    (window as any).changeCursor = changeCursor;
+    (window as any).resetCursor = resetCursor;
     // Function to show the selected tab content
     function showTab(tabName: string) {
         const tabContents = document.getElementsByClassName('tab-content');

@@ -18,23 +18,16 @@ export function getMode(): string {
 			$(this).toggleClass('arrow-down');
 		});
 		$('.discord').click(function () {
-			window.open('http://opensurviv.run.place/discord');
+			window.open('https://x.com/');
 		});
 		$('.info').click(function () {
 			$('.info-box').toggle();
 		});
 		$('.close').click(function () {
 			$('.info-box').hide();
-			$('.partner-box').hide();
-		});
-		$('.partner').click(function () {
-			$('.partner-box').toggle();
 		});
 		$('.loadout').click(function () { window.location.replace(window.location.href += "loadout") })
 	});
-	$.get("assets/" + getMode() + "/CREDITS.md", function (data) {
-		document.getElementById("contents")!.innerHTML = new MarkdownIt().render(data);
-	}, "text");
 if (!window.location.href!.includes("/loadout")) {
 	window.onload = function () {
 		document.getElementById('loading')!.classList.add('zoom-out');
