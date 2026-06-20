@@ -1,10 +1,15 @@
-﻿<link rel="stylesheet" href="scripts/css/loadout.css"
-<link />
+﻿<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Jura:wght@600;700&display=swap">
+<link rel="stylesheet" href="scripts/css/loadout.css">
 
 <button id="loadout-button">Loadout</button>
 <div id="overlay"></div>
 <div id="loadout-container">
-    <div id="close-button" onclick="closeLoadout()">X</div>
+    <a id="loadout-back" href="/">← Back to menu</a>
+    <div id="close-button" onclick="location.href='/'" title="Back to menu">✕</div>
+    <div id="loadout-header">
+        <h2 id="loadout-title">Loadout <span>&amp; Shop</span></h2>
+        <p id="loadout-sub">Spend your survival currency on skins, cursors and gear.</p>
+    </div>
     <div class="tab" onclick="showTab('skins')">Skins</div>
     <div class="tab" onclick="showTab('cursor')">Cursor</div>
     <div class="tab" onclick="showTab('healing')">Healing</div>
