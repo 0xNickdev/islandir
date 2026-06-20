@@ -12,6 +12,97 @@ export function setMode(md: string) {
 export function getMode(): string {
 	return mode
 }
+
+// ---- Game mode info + reusable info modal (GoKill) ----
+type ModeKey = "normal" | "suroi_collab" | "dfbg-collab";
+const MODE_INFO: Record<ModeKey, { label: string; available: boolean; desc: string }> = {
+	"normal": {
+		label: "Normal",
+		available: true,
+		desc: "The classic GoKill experience. Drop onto the island, scavenge weapons and healing, survive the shrinking safe zone and outlast every other player. Last survivor standing wins."
+	},
+	"suroi_collab": {
+		label: "Suroi Collab",
+		available: false,
+		desc: "A crossover mode built with the Suroi community — new guns, reworked loot and a fresh take on the island. Still in the workshop."
+	},
+	"dfbg-collab": {
+		label: "DownFall BG",
+		available: false,
+		desc: "DownFall BattleGround collab — a faster, harder ruleset for veterans who want a brutal fight to the last survivor. Landing on the island soon."
+	}
+};
+
+interface ModalOptions {
+	tag: string;
+	soon?: boolean;
+	title: string;
+	desc: string;
+	primary?: { label: string; onClick: () => void };
+}
+
+function showModal(opts: ModalOptions) {
+	const modal = document.getElementById("gk-modal");
+	if (!modal) return;
+	const badge = document.getElementById("gk-modal-badge")!;
+	badge.textContent = opts.tag;
+	badge.className = "gk-modal__badge" + (opts.soon ? " soon" : "");
+	document.getElementById("gk-modal-title")!.textContent = opts.title;
+	document.getElementById("gk-modal-desc")!.textContent = opts.desc;
+	const actions = document.getElementById("gk-modal-actions")!;
+	actions.innerHTML = "";
+	const btn = document.createElement("div");
+	if (opts.primary) {
+		btn.className = "gk-modal__apply";
+		btn.textContent = opts.primary.label;
+		btn.addEventListener("click", opts.primary.onClick);
+	} else {
+		btn.className = "gk-modal__apply disabled";
+		btn.textContent = "Coming soon";
+	}
+	actions.appendChild(btn);
+	modal.classList.remove("hidden");
+}
+
+function hideModal() {
+	document.getElementById("gk-modal")?.classList.add("hidden");
+}
+
+(function initModeUI() {
+	const modal = document.getElementById("gk-modal");
+	document.getElementById("gk-modal-close")?.addEventListener("click", hideModal);
+	modal?.addEventListener("click", e => { if (e.target === modal) hideModal(); });
+	document.addEventListener("keydown", e => { if (e.key === "Escape") hideModal(); });
+
+	const modeKeys: ModeKey[] = ["normal", "suroi_collab", "dfbg-collab"];
+	const boxes = Array.from(document.querySelectorAll(".box-selectable .mode_box")) as HTMLElement[];
+	boxes.forEach((box, i) => {
+		const key = modeKeys[i];
+		if (!key) return;
+		if (key === "normal") box.classList.add("active");
+		box.addEventListener("click", () => {
+			const info = MODE_INFO[key];
+			if (info.available) {
+				showModal({
+					tag: "GAME MODE",
+					title: info.label,
+					desc: info.desc,
+					primary: {
+						label: "Apply",
+						onClick: () => {
+							setMode(key);
+							boxes.forEach(b => b.classList.remove("active"));
+							box.classList.add("active");
+							hideModal();
+						}
+					}
+				});
+			} else {
+				showModal({ tag: "SOON", soon: true, title: info.label, desc: info.desc });
+			}
+		});
+	});
+})();
 	$(document).ready(function () {
 		$('.arrow').click(function () {
 			$('.box-selectable').toggle();
@@ -26,7 +117,14 @@ export function getMode(): string {
 		$('.close').click(function () {
 			$('.info-box').hide();
 		});
-		$('.loadout').click(function () { window.location.replace(window.location.href += "loadout") })
+		$('.loadout').click(function () {
+			showModal({
+				tag: "SOON",
+				soon: true,
+				title: "Loadout & Shop",
+				desc: "The Loadout is your survivor shop. Spend in-game currency you find scattered across the island to customize your character with new skins, cursors and healing items. Coming soon."
+			});
+		});
 	});
 if (!window.location.href!.includes("/loadout")) {
 	window.onload = function () {
@@ -76,12 +174,6 @@ if (!window.location.href!.includes("/loadout")) {
 	}
 	document.getElementById("button-close")!.onclick = closeBox;
 }
-const modes = ["normal", "suroi_collab", "dfbg-collab"]
-modes.forEach(md => {
-	console.log(document.getElementsByClassName("box-selectable")[0].children[modes.indexOf(md)].querySelector("div"))
-	document.getElementsByClassName("box-selectable")[0].children[modes.indexOf(md)].querySelector("div")?.addEventListener("click", () => { setMode(md); console.log("DONE:)") })
-})
-console.log(getMode())
 	function showAds() {
 		document.querySelectorAll('.ads').forEach(ad => { (<HTMLElement>ad).style.visibility = "visible"; });
 	}

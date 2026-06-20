@@ -635,6 +635,174 @@ body div#menu:not(.hidden) {
   display: flex; align-items: center; justify-content: center;
 }
 
+/* ---------- Red-zone danger callout ---------- */
+.gk-danger {
+  margin-top: 22px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px 22px;
+  border-radius: var(--gk-radius);
+  background: linear-gradient(180deg, rgba(255, 81, 81, 0.12), rgba(255, 81, 81, 0.05));
+  border: 1px solid rgba(255, 81, 81, 0.4);
+}
+.gk-danger__icon {
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(255, 81, 81, 0.5));
+}
+.gk-danger__body h3 {
+  font-family: "Jura", sans-serif;
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: var(--gk-red);
+}
+.gk-danger__body p { margin: 0; color: var(--gk-muted); font-size: 14.5px; line-height: 1.6; }
+.gk-danger__body strong { color: var(--gk-text); }
+
+/* ---------- Roadmap timeline ---------- */
+.gk-timeline {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-left: 8px;
+}
+.gk-timeline::before {
+  content: "";
+  position: absolute;
+  left: 19px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gk-green-deep), rgba(255, 255, 255, 0.08));
+}
+.gk-milestone {
+  position: relative;
+  display: flex;
+  gap: 18px;
+  padding: 10px 0 26px;
+}
+.gk-milestone__dot {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  color: var(--gk-muted);
+  background: var(--gk-panel-solid);
+  border: 2px solid var(--gk-line-soft);
+}
+.gk-milestone.done .gk-milestone__dot {
+  color: #0b0f0b;
+  background: linear-gradient(135deg, var(--gk-green), var(--gk-green-deep));
+  border-color: var(--gk-green);
+}
+.gk-milestone__card {
+  flex: 1;
+  background: var(--gk-panel);
+  border: 1px solid var(--gk-line-soft);
+  border-radius: var(--gk-radius);
+  padding: 18px 20px;
+}
+.gk-milestone__card h3 { font-family: "Jura", sans-serif; font-size: 18px; margin: 8px 0 6px; color: var(--gk-text); }
+.gk-milestone__card p { margin: 0; color: var(--gk-muted); font-size: 14.5px; line-height: 1.55; }
+.gk-status {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.gk-status--live { color: var(--gk-green); background: rgba(111, 174, 58, 0.15); border: 1px solid var(--gk-line); }
+.gk-status--soon { color: #ffce63; background: rgba(255, 206, 99, 0.12); border: 1px solid rgba(255, 206, 99, 0.35); }
+
+/* ---------- Info modal (modes / loadout) ---------- */
+.gk-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(6, 9, 6, 0.72);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.gk-modal.hidden { display: none; }
+.gk-modal__card {
+  position: relative;
+  width: min(440px, 92vw);
+  background: linear-gradient(180deg, var(--gk-panel-solid), #0e140e);
+  border: 1px solid var(--gk-line);
+  border-radius: 18px;
+  box-shadow: var(--gk-shadow);
+  padding: 28px 26px 24px;
+  text-align: center;
+  animation: gk-modal-in 0.18s ease;
+}
+@keyframes gk-modal-in { from { transform: translateY(10px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
+.gk-modal__close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--gk-line-soft);
+  border-radius: 9px;
+  color: var(--gk-text);
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0;
+}
+.gk-modal__close:hover { background: rgba(255, 81, 81, 0.25); }
+.gk-modal__badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gk-green);
+  background: rgba(111, 174, 58, 0.15);
+  border: 1px solid var(--gk-line);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.gk-modal__badge.soon { color: #ffce63; background: rgba(255, 206, 99, 0.12); border-color: rgba(255, 206, 99, 0.35); }
+.gk-modal__title {
+  font-family: "Jura", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 14px 0 10px;
+  color: var(--gk-text);
+}
+.gk-modal__desc { color: var(--gk-muted); font-size: 15px; line-height: 1.6; margin: 0 0 20px; }
+.gk-modal__actions { display: flex; justify-content: center; }
+.gk-modal__apply {
+  min-width: 160px;
+  padding: 13px 24px;
+  font-family: "Jura", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #0b0f0b;
+  background: linear-gradient(135deg, var(--gk-green), var(--gk-green-deep));
+  border-radius: 11px;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.06s;
+}
+.gk-modal__apply:hover { filter: brightness(1.08); }
+.gk-modal__apply:active { transform: translateY(1px); }
+.gk-modal__apply.disabled {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--gk-muted);
+  border: 1px solid var(--gk-line-soft);
+  cursor: not-allowed;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
   .gk-nav { display: none; }
