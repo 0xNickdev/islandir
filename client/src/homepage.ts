@@ -109,7 +109,7 @@ function hideModal() {
 			$(this).toggleClass('arrow-down');
 		});
 		$('.discord').click(function () {
-			window.open('https://x.com/');
+			window.open('https://x.com/gokilldotfun', '_blank');
 		});
 		$('.info').click(function () {
 			$('.info-box').toggle();
