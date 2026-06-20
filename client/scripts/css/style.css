@@ -1038,3 +1038,89 @@ div#menu div#connection.panel {
 .loadout:hover { background-color: rgba(128, 178, 81, 0.85); }
 
 .online-count { font-size: 1vw; }
+
+/* ============================================================
+   In-game HUD polish — cleaner panels, unified GoKill accent.
+   Layout/positions left intact so game logic keeps working.
+   ============================================================ */
+#hud { font-family: "Rajdhani", "Jura", sans-serif; }
+
+#playercountcontainer {
+  border: none;
+  border-radius: 14px;
+  background: rgba(11, 15, 11, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(155, 226, 92, 0.25);
+  padding: 0.6vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#playercount { color: #9be25c; line-height: 1; }
+#alive {
+  font-size: 1.6vh;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(238, 243, 232, 0.75);
+}
+
+/* Weapon slots */
+.weapon-panel {
+  background: rgba(11, 15, 11, 0.6);
+  border: solid 0.35vh transparent;
+  border-radius: 0.8vw;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0.6vh;
+}
+.weapon-panel:hover { background: rgba(111, 174, 58, 0.22); }
+.weapon-index { color: rgba(238, 243, 232, 0.55); }
+.weapon-name { letter-spacing: 0.02em; }
+.selected {
+  border: solid 0.35vh #9be25c;
+  background: rgba(111, 174, 58, 0.28);
+  box-shadow: 0 0 18px rgba(155, 226, 92, 0.35);
+}
+
+/* Healing items */
+.healing-panel {
+  background: rgba(11, 15, 11, 0.6);
+  border-radius: 0.6vw;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+.healing-panel.enabled:hover { border: solid 0.25vh #9be25c; }
+
+/* Kill feed */
+#kill-feeds {
+  background: rgba(11, 15, 11, 0.6);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  padding: 0.4vh 0.8vh;
+  border-radius: 8px;
+}
+
+/* Reload / menu round buttons */
+#reload-btn, #menu-btn {
+  background: rgba(11, 15, 11, 0.72);
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(155, 226, 92, 0.25);
+}
+#reload-btn:hover, #menu-btn:hover { background: rgba(111, 174, 58, 0.3); }
+
+/* In-game settings panel */
+.ingame-panel {
+  background: rgba(11, 15, 11, 0.85);
+  border: 1px solid rgba(155, 226, 92, 0.25);
+  border-radius: 16px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.ingame-panel .button.purple {
+  background: linear-gradient(135deg, #9be25c, #6fae3a);
+  color: #0b0f0b;
+  font-weight: 700;
+}
