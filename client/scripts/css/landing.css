@@ -165,9 +165,10 @@ body div#menu:not(.hidden) {
   background-color: var(--gk-green);
 }
 
-/* X (Twitter) icon */
+/* X (Twitter) + GitHub icon buttons */
 #menu .top-right-stuff { position: static; display: flex; align-items: center; gap: 10px; }
-#menu .discord {
+#menu .discord, #menu .gk-github {
+  display: block;
   width: 42px; height: 42px;
   padding: 11px;
   box-sizing: border-box;
@@ -177,9 +178,9 @@ body div#menu:not(.hidden) {
   cursor: pointer;
   transition: all 0.15s;
 }
-#menu .discord:hover { background: var(--gk-green); border-color: var(--gk-green); }
-#menu .discord:hover svg path { fill: #0b0f0b; }
-#menu .discord svg { width: 100%; height: 100%; display: block; }
+#menu .discord:hover, #menu .gk-github:hover { background: var(--gk-green); border-color: var(--gk-green); }
+#menu .discord:hover svg path, #menu .gk-github:hover svg path { fill: #0b0f0b; }
+#menu .discord svg, #menu .gk-github svg { width: 100%; height: 100%; display: block; }
 
 /* ---------- Hero ---------- */
 .gk-hero {
